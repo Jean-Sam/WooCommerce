@@ -1,0 +1,19 @@
+<?php
+
+add_action( 'woocommerce_checkout_process', 'wc_minimum_order_quantity' );
+
+function wc_minimum_order_quantity() {
+
+	global $woocommerce;
+
+	$minimum = 2;
+
+	if ( $woocommerce->cart->get_cart_contents_count() < $minimum ) { // Get number of items in the cart.
+
+		$woocommerce->add_error( sprintf(__('D&eacute;sol&eacute;, votre commande doit comporter un minimum de 2 cartons. <a href="%s">Retour &agrave; la boutique →</a>', PLUGIN_TEXTDOMAIN), get_permalink( woocommerce_get_page_id('shop') ) ) );
+
+	}
+
+}
+
+?>
