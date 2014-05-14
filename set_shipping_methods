@@ -1,0 +1,37 @@
+<?php
+
+add_filter('woocommerce_package_rates','set_shipping_methods',50,2);
+
+function set_shipping_methods($rates,$package) {
+
+    $items = 0;
+
+    foreach($package['contents'] as $cart_item_key => $package) {
+
+        $items += $package['quantity'];
+
+    }
+
+    if ($items >= 6) {
+
+        foreach($rates as $key => $rate_object) {
+
+            if (strstr($key,"flat_rate"))
+
+                    unset($rates[$key]);
+
+        }
+
+    }
+
+    else {
+
+        unset($rates['free_shipping']);
+
+    }
+
+    return $rates;
+
+}
+
+?>
